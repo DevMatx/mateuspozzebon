@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mateus Pozzebon | Atleta de Jiu-Jitsu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;600;700&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles/index.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">MATEUS <span>P.</span></div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <div class="loader-text">Carregando tatame...</div>
+</div>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NOISE -->
+<div class="noise"></div>
+
+<!-- 3D BACKGROUND CANVAS -->
+<canvas id="canvas3d"></canvas>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobile()">✕</button>
+  <a href="#hero" onclick="closeMobile()">Início</a>
+  <a href="#about" onclick="closeMobile()">Sobre</a>
+  <a href="#sports" onclick="closeMobile()">Esportes</a>
+  <a href="#academies" onclick="closeMobile()">Academias</a>
+  <a href="campeonatos.html" onclick="closeMobile()">Campeonatos</a>
+  <a href="gallery.html" onclick="closeMobile()">Galeria</a>
+  <a href="#instagram" onclick="closeMobile()">Instagram</a>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">MATEUS <span>P.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">Sobre</a></li>
+    <li><a href="#sports">Esportes</a></li>
+    <li><a href="#belt">Faixa</a></li>
+    <li><a href="#academies">Academias</a></li>
+    <li><a href="campeonatos.html">Campeonatos</a></li>
+    <li><a href="gallery.html">Galeria</a></li>
+    <li><a href="#instagram">Instagram</a></li>
+  </ul>
+  <a href="https://www.instagram.com/mateus_pozzebon" target="_blank" class="nav-cta">Seguir</a>
+  <div class="hamburger" onclick="openMobile()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Atleta Brasileiro</div>
+    <h1 class="hero-title">
+      MATEUS<br>
+      <span class="red">POZZE</span><span class="outline">BON</span>
+    </h1>
+    <p class="hero-subtitle">Jiu-Jitsu · Boxing · MMA · Muay Thai</p>
+    <div class="hero-badges">
+      <span class="badge">🥋 BJJ</span>
+      <span class="badge">🥊 Kickboxing</span>
+      <span class="badge">🥋 MMA</span>
+      <span class="badge">🥊 Muay Thai</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#about" class="btn-primary">Conhecer Atleta</a>
+      <a href="campeonatos.html" class="btn-primary">Campeonatos</a>
+      <a href="https://www.instagram.com/mateus_pozzebon" target="_blank" class="btn-secondary">
+        Instagram
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- HERO PHOTO CAROUSEL -->
+  <div class="hero-photo-wrap">
+    <div class="hero-photo-frame">
+      <div class="hero-photo-glow"></div>
+      <div class="hero-carousel" id="heroCarousel">
+        <div class="carousel-slide active">
+          <img src="assets/carrossel 1.jpeg" alt="Mateus Pozzebon em competição" class="hero-photo" />
+        </div>
+        <!-- Adicione mais slides abaixo com a mesma estrutura -->
+        <div class="carousel-slide">
+          <img src="assets/carrossel 2.jpeg" alt="Mateus Pozzebon" class="hero-photo" />
+        </div>
+        <div class="carousel-slide">
+          <img src="assets/carrossel 3.jpeg" alt="Mateus Pozzebon" class="hero-photo" />
+        </div>
+        <div class="carousel-slide">
+          <img src="assets/carrossel 4.jpeg" alt="Mateus Pozzebon" class="hero-photo" />
+        </div>
+      </div>
+      <div class="hero-photo-overlay"></div>
+      <div class="hero-photo-tag">Carrossel de fotos</div>
+      <div class="carousel-dots" id="carouselDots">
+        <span class="dot active" data-index="0"></span>
+        <!-- dots gerados automaticamente pelo JS -->
+      </div>
+    </div>
+    <div class="hero-photo-deco">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar reveal">
+  <div class="stat-item">
+    <div class="stat-number" id="s1">0</div>
+    <div class="stat-label">Posts no Instagram</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <div class="stat-number" id="s2">0</div>
+    <div class="stat-label">Seguidores</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <div class="stat-number" id="s3">0</div>
+    <div class="stat-label">Views / 30 dias</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <div class="stat-number" id="s4">0</div>
+    <div class="stat-label">Modalidades</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual">
+    <div class="about-glow"></div>
+    <div class="gi-illustration">
+      <img src="assets/kimono-art.png" alt="Jiu-Jitsu" class="gi-img" />
+      <div class="gi-aura"></div>
+    </div>
+  </div>
+  <div class="about-text reveal">
+    <div class="section-tag">Quem sou eu</div>
+    <h2 class="section-title">ATLETA<br><span style="color:var(--red)">BRASILEIRO</span></h2>
+    <div class="section-line" style="margin-left:0"></div>
+    <p>
+      Sou um atleta brasileiro de 21 anos fascinado pelas artes marciais. Desde criança sempre quis fazer alguma arte marcial, mas, por condições financeiras, isso
+      não foi possível. Minha jornada começou no tatame do jiu-jitsu aos 20 anos,
+      e se expandiu para diversas outras modalidades, sempre com disciplina, 
+      dedicação e na busca constante pela evolução. Foi a melhor escolha que podia ter tido, eu estava precisando encontrar algo em que fosse bom, tentei várias outras coisas e
+      nenhuma me encantou. Tenho como sonho me tornar campeão mundial de jiu-jitsu e ir para o MMA profissional futuramente, vivendo apenas das artes marciais.
+    </p>
+    <p>
+      Treino Jiu-Jitsu pela academia <strong style="color:var(--white)"><a href="https://www.instagram.com/roninjiujitsucb?igsh=d3d6cjg5bXNteGh6" style="color: white; text-decoration: none;">Ronin Jiu-Jitsu</a></strong>, 
+      pratico Kickboxing pela <strong style="color:var(--white)"><a href="https://www.instagram.com/furiafight?igsh=bTh4c3kwcnRlOHlr" style="color: white; text-decoration: none;">Fúria Fight</a></strong> 
+      e desenvolvo MMA/Boxing/Muay Thai pelo <strong style="color:var(--white)"><a href="https://www.instagram.com/furiafight?igsh=bTh4c3kwcnRlOHlr" style="color: white; text-decoration: none;">Alpha Team</a></strong>. 
+      Cada tatame é uma nova oportunidade de crescimento.
+    </p>
+    <div class="about-details">
+      <div class="detail-item">
+        <div class="detail-label">Modalidade Principal</div>
+        <div class="detail-value">Jiu-Jitsu</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Graduação</div>
+        <div class="detail-value">Faixa Branca</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">País</div>
+        <div class="detail-value">Brasil</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Status em competição</div>
+        <div class="detail-value">Ativo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPORTS -->
+<section id="sports">
+  <div class="section-header reveal">
+    <div class="section-tag">Minhas Modalidades</div>
+    <h2 class="section-title">ARTES MARCIAIS</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="sports-grid">
+    <div class="sport-card sport-card-featured reveal">
+      <div class="sport-ribbon">Principal</div>
+      <svg class="sport-icon" viewBox="0 0 70 70" fill="none">
+        <circle cx="35" cy="35" r="33" stroke="#c8102e" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="35" y="42" text-anchor="middle" font-family="Bebas Neue" font-size="22" fill="#c8102e">BJJ</text>
+      </svg>
+      <div class="sport-name">JIU-JITSU</div>
+      <div class="sport-detail">Arte Suavel</div>
+      <div class="sport-desc">A arte suave que domina o jogo. Técnica, estratégia e controle total do oponente no tatame.</div>
+    </div>
+    <div class="sport-card reveal">
+      <svg class="sport-icon" viewBox="0 0 70 70" fill="none">
+        <circle cx="35" cy="35" r="33" stroke="#555" stroke-width="1.5"/>
+        <text x="35" y="42" text-anchor="middle" font-family="Bebas Neue" font-size="22" fill="#c8102e">Boxing</text>
+      </svg>
+      <div class="sport-name">BOXING</div>
+      <div class="sport-detail">Arte Nobre</div>
+      <div class="sport-desc">Trabalho de boxe focando no jogo de pés, combinações e timing.</div>
+    </div>
+    <div class="sport-card reveal">
+      <svg class="sport-icon" viewBox="0 0 70 70" fill="none">
+        <circle cx="35" cy="35" r="33" stroke="#555" stroke-width="1.5"/>
+        <text x="35" y="42" text-anchor="middle" font-family="Bebas Neue" font-size="22" fill="#c8102e">MMA</text>
+      </svg>
+      <div class="sport-name">MMA</div>
+      <div class="sport-detail">Artes Marciais Mistas</div>
+      <div class="sport-desc">A integração completa de todas as modalidades para o combate total.</div>
+    </div>
+    <div class="sport-card reveal">
+      <svg class="sport-icon" viewBox="0 0 70 70" fill="none">
+        <circle cx="35" cy="35" r="33" stroke="#555" stroke-width="1.5"/>
+        <text x="35" y="42" text-anchor="middle" font-family="Bebas Neue" font-size="22" fill="#c8102e">MT</text>
+      </svg>
+      <div class="sport-name">MUAY THAI</div>
+      <div class="sport-detail">Arte das 8 armas</div>
+      <div class="sport-desc">A arte tailandesa completa em pé: socos, chutes, cotoveladas e joelhadas devastadoras.</div>
+    </div>
+    <div class="sport-card reveal">
+      <svg class="sport-icon" viewBox="0 0 70 70" fill="none">
+        <circle cx="35" cy="35" r="33" stroke="#555" stroke-width="1.5"/>
+        <text x="35" y="42" text-anchor="middle" font-family="Bebas Neue" font-size="22" fill="#c8102e">KB</text>
+      </svg>
+      <div class="sport-name">KICKBOXING</div>
+      <div class="sport-detail">Arte da trocação</div>
+      <div class="sport-desc">Explosão nos golpes, combinando velocidade e potência.</div>
+    </div>
+    <div class="sport-card reveal" style="background: linear-gradient(135deg, var(--panel), rgba(201,168,76,.05)); border-color: rgba(201,168,76,.2);">
+      <svg class="sport-icon" viewBox="0 0 70 70" fill="none">
+        <circle cx="35" cy="35" r="33" stroke="#c9a84c44" stroke-width="1.5"/>
+        <path d="M35 20 L38 30 L50 30 L41 37 L44 47 L35 41 L26 47 L29 37 L20 30 L32 30 Z" stroke="#c9a84c" stroke-width="1.5" fill="none"/>
+      </svg>
+      <div class="sport-name" style="color: var(--gold)">COMPETIDOR</div>
+      <div class="sport-detail" style="color: var(--gold)">Competindo pela Ronin Jiu-Jitsu</div>
+      <div class="sport-desc">Participação ativa em competições regionais e estaduais, representando a Academia Ronin com honra.</div>
+    </div>
+  </div>
+</section>
+
+<!-- BELT 3D SECTION -->
+<section id="belt">
+  <div class="section-header reveal">
+    <div class="section-tag">Minha Graduação</div>
+    <h2 class="section-title"><span style="color:var(--red)">FAIXA</span><br>BRANCA</h2>
+    <div class="section-line"></div>
+  </div>
+  <div id="belt-canvas"></div>
+  <p class="belt-info reveal">
+    A faixa branca representa o começo de uma jornada. É o símbolo da humildade, 
+    da abertura para aprender e da determinação de nunca parar. No Jiu-Jitsu, cada treino 
+    é uma lição, cada luta é uma escola.
+  </p>
+</section>
+
+<!-- ACADEMIES -->
+<section id="academies">
+  <div class="section-header reveal">
+    <div class="section-tag">Onde Treino</div>
+    <h2 class="section-title">MINHAS <span style="color:var(--red)">ACADEMIAS</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <a href="https://www.instagram.com/roninjiujitsucb?igsh=d3d6cjg5bXNteGh6" style="text-decoration: none;"><div class="academies-grid">
+    <div class="academy-card reveal">
+      <div class="academy-logo">R</div>
+      <div class="academy-name">Ronin BJJ</div>
+      <div class="academy-role">Jiu-Jitsu · Faixa Branca</div>
+    </div></a>
+    <a href="https://www.instagram.com/furiafight?igsh=bTh4c3kwcnRlOHlr" style="text-decoration: none;"><div class="academy-card reveal">
+      <div class="academy-logo">FF</div>
+      <div class="academy-name">Fúria Fight</div>
+      <div class="academy-role">Kickboxing</div>
+    </div></a>
+    <a href="https://www.instagram.com/alphatteam?igsh=cXYwdmdnODYzcjU2" style="text-decoration: none;"><div class="academy-card reveal">
+      <div class="academy-logo">AT</div>
+      <div class="academy-name">Alpha Team</div>
+      <div class="academy-role">MMA - Boxing - Muay Thai</div>
+    </div></a>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section id="instagram">
+  <div class="section-header reveal">
+    <div class="section-tag">Redes Sociais</div>
+    <h2 class="section-title">SIGA O<br>ATLETA</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="insta-handle reveal">@mateus_pozzebon</div>
+  <div class="insta-stats reveal">
+    <div class="insta-stat">
+      <div class="insta-stat-num">+200</div>
+      <div class="insta-stat-label">Seguidores</div>
+    </div>
+    <div class="insta-stat">
+      <div class="insta-stat-num">+700</div>
+      <div class="insta-stat-label">Seguindo</div>
+    </div>
+    <div class="insta-stat">
+      <div class="insta-stat-num">+10K</div>
+      <div class="insta-stat-label">Views / Mês</div>
+    </div>
+  </div>
+  <a href="https://www.instagram.com/mateus_pozzebon" target="_blank" class="insta-cta reveal">
+    <span>📸 Seguir no Instagram</span>
+  </a>
+</section>
+
+
+<!-- SPONSOR -->
+<section id="sponsor" class="sponsor-section">
+  <div class="section-header reveal">
+    <div class="section-tag">Parcerias</div>
+    <h2 class="section-title">PATROCÍNIO & APOIO</h2>
+    <div class="section-line"></div>
+    <p class="sponsor-text">
+      Ficou interessado em patrocinar, apoiar ou construir uma parceria com o atleta?
+      Entre em contato para conversar sobre oportunidades, divulgação da sua marca e futuros projetos.
+    </p>
+    <div class="sponsor-contact">
+      Email: <a href="mailto:mateus123pozzebon@gmail.com">mateus123pozzebon@gmail.com</a>
+      <p><br><strong style="color:#c8102e; font-size: 2rem;">PIX:</strong><br>Caso esteja interessado em me apoiar financeiramente,<br>meu PIX é o meu
+      endereço de e-mail. Qualquer valor vai ser de extrema importância para realizar o meu sonho!<br><strong style="color:#c8102e; font-size: 1.5rem;">OSS!</strong></p>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">MATEUS <span>POZZEBON</span></div>
+  <div class="footer-copy">© 2026 · Atleta Brasileiro · Todos os direitos reservados</div>
+  <div class="footer-socials">
+    <a href="https://www.instagram.com/mateus_pozzebon" target="_blank" class="social-link" title="Instagram">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="2" width="20" height="20" rx="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+    </a>
+    <a href="https://www.threads.net/@mateus_pozzebon" target="_blank" class="social-link" title="Threads">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm4.5 14.5c-.4 1.5-1.8 2.5-4.5 2.5-3 0-5-1.5-5-4.5s2-4.5 5-4.5c1.5 0 2.5.4 3.2 1l-.8 1c-.5-.4-1.2-.6-2.4-.6-2 0-3.5 1-3.5 3s1.5 3 3.5 3c2 0 2.8-.8 3-1.8l1.5.9z"/>
+      </svg>
+    </a>
+  </div>
+</footer>
+
+<script src="/js/index.js"></script>
+</body>
+</html>
