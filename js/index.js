@@ -20,8 +20,16 @@ function animCursor() {
 }
 animCursor();
 document.querySelectorAll('a, button, .sport-card, .academy-card').forEach(el => {
-  el.addEventListener('mouseenter', () => { ring.style.transform = 'translate(-50%,-50%) scale(2)'; ring.style.opacity = '.3'; });
-  el.addEventListener('mouseleave', () => { ring.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.opacity = '.6'; });
+  el.addEventListener('mouseenter', () => {
+    ring.style.transform = 'translate(-50%,-50%) scale(2)';
+    ring.style.opacity = '.3';
+    cur.classList.add('clickable');
+  });
+  el.addEventListener('mouseleave', () => {
+    ring.style.transform = 'translate(-50%,-50%) scale(1)';
+    ring.style.opacity = '.6';
+    cur.classList.remove('clickable');
+  });
 });
 
 /* ─── NAV SCROLL ─── */
