@@ -16,6 +16,32 @@ body {
   font-family: 'Rajdhani', sans-serif;
   background: var(--black);
   color: var(--white);
+  cursor: none;
+}
+
+a, button, input, textarea, select, .nav-cta, .btn-primary, .btn-secondary, .filter-button, .gallery-card {
+  cursor: none !important;
+}
+
+/* ─── CURSOR ─── */
+.cursor {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  background-image: url("../assets/ponteiro.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform .1s, opacity .2s;
+}
+.cursor.clickable {
+  background-image: url("../assets/ponteiroclicavel.png");
+}
+.cursor-ring {
+  display: none;
 }
 
 a {

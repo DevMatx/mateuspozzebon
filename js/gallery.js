@@ -1,4 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
+  /* ─── CURSOR ─── */
+  const cur = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animCursor() {
+    cur.style.left = mx + 'px'; cur.style.top = my + 'px';
+    rx += (mx - rx) * .12; ry += (my - ry) * .12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+  document.querySelectorAll('a, button, .filter-button, .gallery-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cur.classList.add('clickable');
+    });
+    el.addEventListener('mouseleave', () => {
+      cur.classList.remove('clickable');
+    });
+  });
+
   const disciplineButtons = Array.from(document.querySelectorAll('#disciplineFilters .filter-button'));
   const categoryButtons = Array.from(document.querySelectorAll('#categoryFilters .filter-button'));
   const mediaTypeButtons = Array.from(document.querySelectorAll('#mediaTypeFilters .filter-button'));

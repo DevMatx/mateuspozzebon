@@ -19,9 +19,13 @@ function animCursor() {
   requestAnimationFrame(animCursor);
 }
 animCursor();
-document.querySelectorAll('a, button, .sport-card, .academy-card, .champ-card').forEach(el => {
-  el.addEventListener('mouseenter', () => { ring.style.transform = 'translate(-50%,-50%) scale(2)'; ring.style.opacity = '.3'; });
-  el.addEventListener('mouseleave', () => { ring.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.opacity = '.6'; });
+document.querySelectorAll('a, button, .champ-card, .championship-card, .championship-item, .card-inner').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cur.classList.add('clickable');
+  });
+  el.addEventListener('mouseleave', () => {
+    cur.classList.remove('clickable');
+  });
 });
 
 document.querySelectorAll('.champ-card').forEach(card => {
