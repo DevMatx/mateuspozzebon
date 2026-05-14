@@ -561,7 +561,7 @@
     /* ─── INSTAGRAM SECTION ─── */
     #instagram {
       padding: 8rem 4rem;
-      background: var(--black);
+      background: var(--charcoal);
       text-align: center;
     }
 
@@ -816,7 +816,7 @@
 /* ─── SPONSOR SECTION ─── */
 #sponsor{
   padding:8rem 4rem;
-  background:linear-gradient(180deg,var(--charcoal) 0%, var(--black) 100%);
+  background:linear-gradient(180deg,var(--black) 0%, var(--black) 100%);
 }
 
 .sponsor-container{
@@ -1026,3 +1026,165 @@
 .sponsor-contact{margin-top:1.5rem;font-size:1.2rem;font-weight:700;text-align:center;}
 .sponsor-contact a{color:var(--white);text-decoration:none;}
 .sponsor-contact a:hover{color:var(--red);}
+
+/* ─── SERVICES SECTION ─── */
+#services {
+  padding: 8rem 4rem;
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(180deg, var(--black) 0%, var(--charcoal) 50%, var(--black) 100%);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 4rem auto 0;
+}
+
+/* ── flip card wrapper ── */
+.service-card {
+  background: transparent;
+  border: 1px solid var(--border);
+  position: relative;
+  perspective: 1200px;
+  min-height: 300px;
+  transition: border-color .3s;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(200,16,46,.18), transparent 70%);
+  opacity: 0;
+  transition: opacity .3s;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.service-card:hover { border-color: rgba(200,16,46,.5); }
+.service-card:hover::before { opacity: 1; }
+
+/* ── card inner (rotates) ── */
+.service-card .card-inner {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  transition: transform .7s ease;
+  transform-style: preserve-3d;
+  position: relative;
+  cursor: pointer;
+}
+
+.service-card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* ── faces ── */
+.service-card .card-face {
+  position: absolute;
+  inset: 0;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  backface-visibility: hidden;
+  background: var(--panel);
+}
+
+.service-card .card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.08));
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* ── front face content ── */
+.service-icon-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.service-icon {
+  width: 80px;
+  height: 80px;
+  filter: drop-shadow(0 0 10px rgba(200,16,46,.35));
+  transition: filter .3s;
+}
+
+.service-card:hover .service-icon {
+  filter: drop-shadow(0 0 18px rgba(200,16,46,.6));
+}
+
+.service-name {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.8rem;
+  letter-spacing: .08em;
+  color: var(--white);
+  margin-bottom: .4rem;
+}
+
+.service-detail {
+  font-family: 'Oswald', sans-serif;
+  font-size: .75rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 1rem;
+}
+
+.service-desc {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem;
+  color: var(--grey);
+  line-height: 1.6;
+}
+
+.flip-hint {
+  margin-top: 1.2rem;
+  font-family: 'Oswald', sans-serif;
+  font-size: .68rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(200,16,46,.6);
+}
+
+/* ── back face content (reuse .back-content, .flip-note from campeonatos) ── */
+.service-card .back-content {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  color: #ddd;
+}
+
+.service-card .back-content h4 {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 1.8rem;
+  margin: 0;
+  color: var(--red);
+}
+
+.service-card .back-content p {
+  margin: 0;
+  color: #ccc;
+  line-height: 1.7;
+}
+
+.service-card .flip-note {
+  margin-top: 1rem;
+  font-size: .85rem;
+  color: var(--grey);
+}
+
+@media (max-width: 900px) {
+  #services { padding: 5rem 1.5rem; }
+  .services-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+}

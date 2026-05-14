@@ -19,7 +19,7 @@ function animCursor() {
   requestAnimationFrame(animCursor);
 }
 animCursor();
-document.querySelectorAll('a, button, .sport-card, .academy-card').forEach(el => {
+document.querySelectorAll('a, button, .sport-card, .academy-card, .service-card').forEach(el => {
   el.addEventListener('mouseenter', () => {
     ring.style.transform = 'translate(-50%,-50%) scale(2)';
     ring.style.opacity = '.3';
@@ -29,6 +29,13 @@ document.querySelectorAll('a, button, .sport-card, .academy-card').forEach(el =>
     ring.style.transform = 'translate(-50%,-50%) scale(1)';
     ring.style.opacity = '.6';
     cur.classList.remove('clickable');
+  });
+});
+
+/* ─── SERVICE CARDS FLIP ─── */
+document.querySelectorAll('.service-card').forEach(card => {
+  card.addEventListener('click', () => {
+    card.classList.toggle('flipped');
   });
 });
 
