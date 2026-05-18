@@ -310,6 +310,32 @@ function startAnimations() {
 
   function getSlides() { return carousel.querySelectorAll('.carousel-slide'); }
 
+  function renderSlides(media) {
+    if (!Array.isArray(media) || media.length === 0) return;
+
+    carousel.innerHTML = media
+      .filter(item => item.resourceType === 'image')
+      .map((item, index) => `
+        <div class="carousel-slide${index === 0 ? ' active' : ''}">
+          <img src="${item.url}" alt="${item.alt || item.title || 'Mateus Pozzebon'}" class="hero-photo" />
+        </div>
+      `)
+      .join('');
+
+    currentSlide = 0;
+  }
+
+  async function loadSlidesFromApi() {
+    try {
+      const response = await fetch('/api/media?placement=hero-carousel&resourceType=image');
+      if (!response.ok) return;
+      const media = await response.json();
+      renderSlides(media);
+    } catch (_error) {
+      // Mantém o carrossel estático quando a API não estiver disponível.
+    }
+  }
+
   function goTo(index) {
     const slides = getSlides();
     if (slides.length === 0) return;
@@ -337,6 +363,8 @@ function startAnimations() {
     autoplayTimer = setInterval(() => goTo(currentSlide + 1), INTERVAL);
   }
 
-  buildDots();
-  resetTimer();
+  loadSlidesFromApi().finally(() => {
+    buildDots();
+    resetTimer();
+  });
 })();

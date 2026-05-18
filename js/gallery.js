@@ -58,6 +58,48 @@ document.addEventListener('DOMContentLoaded', () => {
     return cloned;
   }
 
+  function escapeHtml(value) {
+    return String(value || '').replace(/[&<>"']/g, char => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[char]));
+  }
+
+  function buildMediaMarkup(item) {
+    const label = `${item.discipline === 'jiu-jitsu' ? 'Jiu-Jitsu' : item.discipline} â€¢ ${item.category}`;
+    const mediaMarkup = item.resourceType === 'video'
+      ? `<video src="${item.url}" controls></video>`
+      : `<img src="${item.url}" alt="${escapeHtml(item.alt || item.title || 'Mídia da galeria')}" />`;
+    const previewClass = item.resourceType === 'video' ? 'media-preview--video' : 'media-preview--photo';
+
+    return `
+      <article class="gallery-card" data-discipline="${escapeHtml(item.discipline)}" data-category="${escapeHtml(item.category)}">
+        <div class="media-preview ${previewClass}">
+          ${mediaMarkup}
+        </div>
+        <div class="gallery-card-body">
+          <span class="gallery-label">${escapeHtml(label)}</span>
+          <h3>${escapeHtml(item.title)}</h3>
+        </div>
+      </article>
+    `;
+  }
+
+  async function loadGalleryFromApi() {
+    try {
+      const response = await fetch('/api/media?placement=gallery');
+      if (!response.ok) return;
+      const media = await response.json();
+      if (!Array.isArray(media) || media.length === 0) return;
+      galleryGrid.innerHTML = media.map(buildMediaMarkup).join('');
+    } catch (_error) {
+      // Mantém a galeria estática quando a API não estiver disponível.
+    }
+  }
+
   function buildHeroCarousel() {
     const heroMedia = document.querySelector('.hero-card-media img');
     const heroImageSources = Array.from(galleryGrid.querySelectorAll('img')).filter(img => {
@@ -289,9 +331,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  convertMultiImageCards();
-  buildCarousels();
-  buildHeroCarousel();
+  loadGalleryFromApi().finally(() => {
+    convertMultiImageCards();
+    buildCarousels();
+    buildHeroCarousel();
+    filterGallery();
+  });
 
   disciplineButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -317,5 +362,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  filterGallery();
 });

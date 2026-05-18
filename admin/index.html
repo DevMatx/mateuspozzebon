@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin | Mídias</title>
+  <link rel="stylesheet" href="/admin/styles.css" />
+</head>
+<body>
+  <main class="admin-shell">
+    <section class="login-panel" id="loginPanel">
+      <h1>Painel de Mídias</h1>
+      <form id="loginForm">
+        <label>
+          E-mail
+          <input type="email" name="email" autocomplete="email" required />
+        </label>
+        <label>
+          Senha
+          <input type="password" name="password" autocomplete="current-password" required />
+        </label>
+        <button type="submit">Entrar</button>
+        <p class="message" id="loginMessage"></p>
+      </form>
+    </section>
+
+    <section class="dashboard hidden" id="dashboard">
+      <header class="dashboard-header">
+        <div>
+          <span class="eyebrow">Admin</span>
+          <h1>Gestão de mídias</h1>
+        </div>
+        <button type="button" class="ghost" id="logoutButton">Sair</button>
+      </header>
+
+      <form class="media-form" id="mediaForm">
+        <label>
+          Arquivo
+          <input type="file" name="file" accept="image/*,video/*" required />
+        </label>
+        <label>
+          Título
+          <input type="text" name="title" required />
+        </label>
+        <label>
+          Texto alternativo
+          <input type="text" name="alt" />
+        </label>
+        <label>
+          Modalidade
+          <select name="discipline">
+            <option value="jiu-jitsu">Jiu-Jitsu</option>
+            <option value="boxing">Boxing</option>
+            <option value="mma">MMA</option>
+            <option value="muay-thai">Muay Thai</option>
+            <option value="kickboxing">Kickboxing</option>
+            <option value="all">Geral</option>
+          </select>
+        </label>
+        <label>
+          Categoria
+          <select name="category">
+            <option value="campeonatos">Campeonatos</option>
+            <option value="treinos">Treinos</option>
+            <option value="preparacao">Preparação</option>
+            <option value="perfil">Perfil</option>
+            <option value="social">Social</option>
+          </select>
+        </label>
+        <fieldset>
+          <legend>Onde aparece</legend>
+          <label><input type="checkbox" name="placement" value="gallery" checked /> Galeria</label>
+          <label><input type="checkbox" name="placement" value="hero-carousel" /> Carrossel inicial</label>
+          <label><input type="checkbox" name="placement" value="about" /> Sobre</label>
+          <label><input type="checkbox" name="placement" value="social" /> Social</label>
+        </fieldset>
+        <label>
+          Ordem
+          <input type="number" name="sortOrder" value="0" />
+        </label>
+        <button type="submit">Enviar para Cloudinary</button>
+        <p class="message" id="formMessage"></p>
+      </form>
+
+      <section class="media-list" id="mediaList"></section>
+    </section>
+  </main>
+
+  <template id="mediaItemTemplate">
+    <article class="media-item">
+      <div class="thumb"></div>
+      <form class="edit-form">
+        <input type="hidden" name="id" />
+        <label>Título <input type="text" name="title" /></label>
+        <label>Alt <input type="text" name="alt" /></label>
+        <label>Modalidade
+          <select name="discipline">
+            <option value="jiu-jitsu">Jiu-Jitsu</option>
+            <option value="boxing">Boxing</option>
+            <option value="mma">MMA</option>
+            <option value="muay-thai">Muay Thai</option>
+            <option value="kickboxing">Kickboxing</option>
+            <option value="all">Geral</option>
+          </select>
+        </label>
+        <label>Categoria
+          <select name="category">
+            <option value="campeonatos">Campeonatos</option>
+            <option value="treinos">Treinos</option>
+            <option value="preparacao">Preparação</option>
+            <option value="perfil">Perfil</option>
+            <option value="social">Social</option>
+          </select>
+        </label>
+        <label>Posições <input type="text" name="placement" /></label>
+        <label>Ordem <input type="number" name="sortOrder" /></label>
+        <label class="inline"><input type="checkbox" name="isActive" /> Ativa</label>
+        <div class="actions">
+          <button type="submit">Salvar</button>
+          <button type="button" class="danger delete-button">Excluir</button>
+        </div>
+      </form>
+    </article>
+  </template>
+
+  <script src="/admin/app.js"></script>
+</body>
+</html>

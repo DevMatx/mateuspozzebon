@@ -1050,6 +1050,8 @@
   position: relative;
   perspective: 1200px;
   transition: border-color .3s;
+  display: flex;
+  flex-direction: column;
 }
 
 .service-card::before {
@@ -1069,10 +1071,13 @@
 /* ── card inner (rotates) ── */
 .service-card .card-inner {
   width: 100%;
+  flex: 1;
   transition: transform .7s ease;
   transform-style: preserve-3d;
   position: relative;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }
 
 .service-card.flipped .card-inner {
@@ -1097,6 +1102,7 @@
 .service-card .card-front {
   position: relative;
   visibility: visible;
+  flex: 1;
 }
 
 /* Back face: absolutely positioned on top, hidden by default */
