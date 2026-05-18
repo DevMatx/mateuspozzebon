@@ -58,6 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
     return cloned;
   }
 
+  function normalizeTitle(value) {
+    return String(value || '').trim().toLowerCase();
+  }
+
   function escapeHtml(value) {
     return String(value || '').replace(/[&<>"']/g, char => ({
       '&': '&amp;',
@@ -69,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function buildMediaMarkup(item) {
-    const label = `${item.discipline === 'jiu-jitsu' ? 'Jiu-Jitsu' : item.discipline} â€¢ ${item.category}`;
+    const label = `${item.discipline === 'jiu-jitsu' ? 'Jiu-Jitsu' : item.discipline} - ${item.category}`;
     const mediaMarkup = item.resourceType === 'video'
       ? `<video src="${item.url}" controls></video>`
       : `<img src="${item.url}" alt="${escapeHtml(item.alt || item.title || 'Mídia da galeria')}" />`;
@@ -130,17 +134,19 @@ document.addEventListener('DOMContentLoaded', () => {
     galleryItems.forEach(item => {
       const title = item.querySelector('h3')?.textContent.trim() || '';
       const mediaItems = getCardMediaItems(item);
-      const mediaType = mediaItems.length > 0 ? mediaItems[0].tagName.toLowerCase() : 'photo'; // default to photo if no media
-      const groupKey = `${title}|${mediaType}`;
+      if (!title || mediaItems.length === 0) return;
+      if (mediaItems.some(media => media.tagName !== 'IMG')) return;
+
+      const groupKey = normalizeTitle(title);
       if (!groups.has(groupKey)) groups.set(groupKey, []);
       groups.get(groupKey).push(item);
     });
 
-    groups.forEach((items, groupKey) => {
+    groups.forEach(items => {
       if (items.length <= 1) return;
 
-      const [title, mediaType] = groupKey.split('|');
       const firstItem = items[0];
+      const title = firstItem.querySelector('h3')?.textContent.trim() || '';
       const labelText = firstItem.querySelector('.gallery-label')?.textContent || '';
 
       const wrapper = document.createElement('article');
@@ -161,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
           slide.className = 'carousel-slide';
 
           const mediaPreview = document.createElement('div');
-          mediaPreview.className = `media-preview media-preview--${media.tagName.toLowerCase()}`;
+          mediaPreview.className = 'media-preview media-preview--photo';
           mediaPreview.appendChild(cloneMediaNode(media));
 
           slide.appendChild(mediaPreview);
@@ -175,13 +181,13 @@ document.addEventListener('DOMContentLoaded', () => {
       prevButton.type = 'button';
       prevButton.className = 'carousel-control carousel-prev';
       prevButton.setAttribute('aria-label', 'Foto anterior');
-      prevButton.textContent = '‹';
+      prevButton.textContent = '<';
 
       const nextButton = document.createElement('button');
       nextButton.type = 'button';
       nextButton.className = 'carousel-control carousel-next';
       nextButton.setAttribute('aria-label', 'Próxima foto');
-      nextButton.textContent = '›';
+      nextButton.textContent = '>';
 
       carouselVisual.appendChild(prevButton);
       carouselVisual.appendChild(nextButton);
@@ -234,8 +240,8 @@ document.addEventListener('DOMContentLoaded', () => {
     cards.forEach(card => {
       const mediaElements = Array.from(card.querySelectorAll('img, video'));
       if (mediaElements.length <= 1) return;
+      if (mediaElements.some(media => media.tagName !== 'IMG')) return;
 
-      const mediaType = mediaElements[0].tagName.toLowerCase();
       const labelText = card.querySelector('.gallery-label')?.textContent || '';
       const title = card.querySelector('h3')?.textContent.trim() || '';
       const discipline = card.dataset.discipline;
@@ -257,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
         slide.className = 'carousel-slide';
 
         const mediaPreview = document.createElement('div');
-        mediaPreview.className = `media-preview media-preview--${media.tagName.toLowerCase()}`;
+        mediaPreview.className = 'media-preview media-preview--photo';
         mediaPreview.appendChild(cloneMediaNode(media));
 
         slide.appendChild(mediaPreview);
@@ -270,13 +276,13 @@ document.addEventListener('DOMContentLoaded', () => {
       prevButton.type = 'button';
       prevButton.className = 'carousel-control carousel-prev';
       prevButton.setAttribute('aria-label', 'Mídia anterior');
-      prevButton.textContent = '‹';
+      prevButton.textContent = '<';
 
       const nextButton = document.createElement('button');
       nextButton.type = 'button';
       nextButton.className = 'carousel-control carousel-next';
       nextButton.setAttribute('aria-label', 'Próxima mídia');
-      nextButton.textContent = '›';
+      nextButton.textContent = '>';
 
       carouselVisual.appendChild(prevButton);
       carouselVisual.appendChild(nextButton);
@@ -332,8 +338,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   loadGalleryFromApi().finally(() => {
-    convertMultiImageCards();
     buildCarousels();
+    convertMultiImageCards();
     buildHeroCarousel();
     filterGallery();
   });
